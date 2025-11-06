@@ -5932,3 +5932,4 @@ ossl_ctx_legacy_digest_signatures_allowed ?	3_0_1	EXIST::FUNCTION:
 ossl_ctx_legacy_digest_signatures_allowed_set ?	3_0_1	EXIST::FUNCTION:
 CMS_dataFinal_ex                        ?	3_5_9rh	EXIST::FUNCTION:CMS
 CMS_SignerInfo_verify_ex                ?	3_5_9rh	EXIST::FUNCTION:CMS
+EVP_SIGNATURE_has_message_update        ?	3_5_9rh	EXIST::FUNCTION:
