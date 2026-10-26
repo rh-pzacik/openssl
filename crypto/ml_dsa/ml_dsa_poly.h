@@ -12,7 +12,11 @@
 
 /* Polynomial object with 256 coefficients. The coefficients are unsigned 32 bits */
 struct poly_st {
+#if defined(_ARCH_PPC64)
+    __attribute__((aligned(16))) uint32_t coeff[ML_DSA_NUM_POLY_COEFFICIENTS];
+#else
     uint32_t coeff[ML_DSA_NUM_POLY_COEFFICIENTS];
+#endif
 };
 
 static ossl_inline ossl_unused void

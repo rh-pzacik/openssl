@@ -4,7 +4,20 @@ $COMMON=ml_dsa_encoders.c ml_dsa_key_compress.c ml_dsa_key.c \
         ml_dsa_matrix.c ml_dsa_ntt.c ml_dsa_params.c ml_dsa_sample.c \
         ml_dsa_sign.c
 
+$ML_DSA_ASM=
+IF[{- !$disabled{asm} -}]
+  IF[{- $target{sys_id} ne "AIX" && $target{sys_id} ne "MACOSX" -}]
+    $ML_DSA_ASM_ppc64=asm/mldsa_ntt_ppc64le.S asm/mldsa_intt_ppc64le.S
+  ENDIF
+
+  # Now that we have defined all the arch specific variables, use the
+  # appropriate one, and define the appropriate macros
+  IF[$ML_DSA_ASM_{- $target{asm_arch} -}]
+    $ML_DSA_ASM=$ML_DSA_ASM_{- $target{asm_arch} -}
+  ENDIF
+ENDIF
+
 IF[{- !$disabled{'ml-dsa'} -}]
-  SOURCE[../../libcrypto]=$COMMON
-  SOURCE[../../providers/libfips.a]=$COMMON
+  SOURCE[../../libcrypto]=$COMMON $ML_DSA_ASM
+  SOURCE[../../providers/libfips.a]=$COMMON $ML_DSA_ASM
 ENDIF
